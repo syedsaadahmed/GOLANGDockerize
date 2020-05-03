@@ -1,0 +1,21 @@
+version: "3.6"
+
+services:
+  learningpack:
+    image: learningpack
+    build:
+      context: .
+      dockerfile: tools/Dockerfile
+
+    volumes:
+      - ./source:/opt/go/src/learningpack
+      - ./:/srv/dev
+      - ${HOME}/.gitconfig:/home/igp/.gitconfig
+
+    environment:
+      - "GOPATH=/opt/go:$GOPATH"
+      - "PATH=/opt/go/bin:$PATH"
+      - "PROJECT=learningpack"
+  
+    ports:
+      - "2228:22"
