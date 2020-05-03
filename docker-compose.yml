@@ -10,7 +10,7 @@ services:
     volumes:
       - ./source:/opt/go/src/learningpack
       - ./:/srv/dev
-      - ${HOME}/.gitconfig:/home/igp/.gitconfig
+      - ${HOME}/.gitconfig:/home/helloworld/.gitconfig
 
     environment:
       - "GOPATH=/opt/go:$GOPATH"
