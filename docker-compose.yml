@@ -5,11 +5,10 @@ services:
     image: learningpack
     build:
       context: .
-      dockerfile: tools/Dockerfile
+      dockerfile: Files/Dockerfile
 
     volumes:
       - ./source:/opt/go/src/learningpack
-      - ./:/srv/dev
       - ${HOME}/.gitconfig:/home/hello/.gitconfig
 
     environment:

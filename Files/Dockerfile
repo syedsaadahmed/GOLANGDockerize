@@ -1,6 +1,5 @@
 FROM golang:1.14
 
-
 USER root
 RUN apt-get update && apt-get install -y sudo
 RUN echo "hello ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -13,10 +12,9 @@ RUN useradd --uid 22222 --user-group --create-home --shell /bin/bash hello
 RUN echo 'hello:hello' | chpasswd
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
-COPY tools/docker-entrypoint.sh /
+COPY Files/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
-
 
 ENV GOPATH /opt/go:$GOPATH
 ENV PATH /opt/go/bin:$PATH
@@ -25,17 +23,7 @@ ENV PROJECT learningpack
 RUN echo "export GOPATH=/opt/go:$GOPATH" >> /home/hello/.bashrc
 RUN echo "export PATH=/opt/go/bin:$PATH" >> /home/hello/.bashrc
 
-RUN go get -v github.com/derekparker/delve/cmd/dlv
-RUN go get -v github.com/mdempsky/gocode
-RUN go get -v github.com/uudashr/gopkgs/v2/cmd/gopkgs
-RUN go get -v github.com/ramya-rao-a/go-outline
-RUN go get -v github.com/stamblerre/gocode
-RUN go get -v github.com/rogpeppe/godef
-RUN go get -v github.com/sqs/goreturns
-RUN go get -v github.com/stamblerre/gocode
-RUN go get -v golang.org/x/lint/golint
-
-RUN chown -R hello:hello /opt/go
+#RUN chown -R hello:hello /opt/go
 
 ADD ./source /opt/go/src/${PROJECT}
 WORKDIR /opt/go/src/${PROJECT}
